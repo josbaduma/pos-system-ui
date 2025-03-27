@@ -4,8 +4,9 @@ import {
   createNewSubAccount,
   editSubAccount,
   fetchSubAccountsActivePerTable,
+  updateQuantity,
 } from "@/api/tables";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -48,7 +49,7 @@ const SubAccount = () => {
     mutationFn: createNewSubAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [query_keys.CREATE_SUBACCOUNT, table],
+        queryKey: [query_keys.LIST_SUBACCOUNTS, table],
       });
       setMensaje("Subcuenta creada exitosamente ✅");
       setNombre("");
@@ -62,12 +63,21 @@ const SubAccount = () => {
     mutationFn: editSubAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [query_keys.EDIT_SUBACCOUNT, table],
+        queryKey: [query_keys.LIST_SUBACCOUNTS, table],
       });
       setIsDialogOpen(false);
     },
     onError: () => {
       alert("Error al actualizar la subcuenta ❌");
+    },
+  });
+
+  const updateQuantityMutation = useMutation({
+    mutationFn: updateQuantity,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [query_keys.LIST_SUBACCOUNTS, table],
+      });
     },
   });
 
@@ -83,6 +93,42 @@ const SubAccount = () => {
     setIsDialogOpen(true);
   };
 
+  const handleQuantityChange = (detailId: number, quantity: number) => {
+    setEditDetalles((prev) =>
+      prev.map((details) =>
+        details.id === detailId ? { ...details, quantity } : details
+      )
+    );
+  };
+
+  const handleQuantityBlur = async (detailId: number, quantity: number) => {
+    if (editId !== null) {
+      try {
+        updateQuantityMutation.mutate({
+          subaccountId: editId,
+          detailId,
+          quantity,
+        });
+        setEditDetalles((prev) =>
+          prev.map((detail) =>
+            detail.id === detailId
+              ? {
+                  ...detail,
+                  quantity: quantity,
+                  subtotal: detail.product.price * quantity,
+                }
+              : detail
+          )
+        );
+        queryClient.invalidateQueries({
+          queryKey: [query_keys.LIST_SUBACCOUNTS, table],
+        });
+      } catch (error) {
+        console.error("Error al actualizar la cantidad:", error);
+      }
+    }
+  };
+
   const handleEditSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editId !== null) {
@@ -96,7 +142,10 @@ const SubAccount = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-6">
-      <Card className="w-3xl">
+      <Link to="/tables">
+        <Button variant="outline">← Volver a Mesas</Button>
+      </Link>
+      <Card className="w-3xl mt-4">
         <CardHeader>
           <CardTitle>Subcuentas de la Mesa #{table}</CardTitle>
         </CardHeader>
@@ -180,7 +229,22 @@ const SubAccount = () => {
                   <TableRow key={detail.id}>
                     <TableCell>{detail.id}</TableCell>
                     <TableCell>{detail.product.name}</TableCell>
-                    <TableCell>{detail.quantity}</TableCell>
+                    <TableCell>
+                      <Input
+                        type="number"
+                        value={detail.quantity}
+                        min="1"
+                        onChange={(e) =>
+                          handleQuantityChange(
+                            detail.id,
+                            Number(e.target.value)
+                          )
+                        }
+                        onBlur={() =>
+                          handleQuantityBlur(detail.id, detail.quantity)
+                        }
+                      />
+                    </TableCell>
                     <TableCell>{detail.subtotal}</TableCell>
                   </TableRow>
                 ))}

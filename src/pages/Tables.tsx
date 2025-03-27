@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTables, Table } from "../api/tables";
+import { Link } from "react-router-dom";
 
 const TablesPage: React.FC = () => {
   const {
@@ -32,18 +33,20 @@ const TablesPage: React.FC = () => {
       </h1>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8">
         {tables?.map((table: Table) => (
-          <div
-            key={table.id}
-            className={`p-6 rounded-lg shadow-md text-white ${getTableColor(
-              table.status
-            )}`}
-          >
-            <h2 className="text-xl font-bold mb-2">{table.name}</h2>
-            <p className="text-sm">
-              Estado:{" "}
-              <span className="font-medium capitalize">{table.status}</span>
-            </p>
-          </div>
+          <Link to={`/subaccount/${table.id}`} key={table.id}>
+            <div
+              key={table.id}
+              className={`p-6 rounded-lg shadow-md text-white ${getTableColor(
+                table.status
+              )}`}
+            >
+              <h2 className="text-xl font-bold mb-2">{table.name}</h2>
+              <p className="text-sm">
+                Estado:{" "}
+                <span className="font-medium capitalize">{table.status}</span>
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
