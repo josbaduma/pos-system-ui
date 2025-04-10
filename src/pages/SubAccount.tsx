@@ -25,6 +25,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { query_keys } from "../constants/queryKeys";
+import EditSubAccount from "@/components/EditSubAccount";
 
 const SubAccount = () => {
   const { table } = useParams();
@@ -47,12 +48,14 @@ const SubAccount = () => {
 
   const createMutation = useMutation({
     mutationFn: createNewSubAccount,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [query_keys.LIST_SUBACCOUNTS, table],
       });
       setMensaje("Subcuenta creada exitosamente ✅");
       setNombre("");
+      const account = { ...data.sub_account, details: [] };
+      handleEdit(account);
     },
     onError: () => {
       setMensaje("Error al crear la subcuenta ❌");
@@ -83,7 +86,7 @@ const SubAccount = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createMutation.mutate({ nombre });
+    createMutation.mutate({ body: { name: nombre, table_id: Number(table) } });
   };
 
   const handleEdit = (subcuenta: any) => {
@@ -166,7 +169,7 @@ const SubAccount = () => {
 
           {mensaje && <p className="text-green-600">{mensaje}</p>}
 
-          <Table>
+          <Table className="mt-2">
             <TableHeader>
               <TableRow>
                 <TableHead>ID</TableHead>
@@ -196,7 +199,7 @@ const SubAccount = () => {
       </Card>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-3xl w-3xl">
+        <DialogContent className="sm:max-w-3xl max-w-4xl h-[80vh] flex flex-col">
           <DialogHeader>
             <DialogTitle>Editar Subcuenta</DialogTitle>
           </DialogHeader>
@@ -253,6 +256,11 @@ const SubAccount = () => {
           ) : (
             <p>No hay productos en esta subcuenta.</p>
           )}
+          <EditSubAccount
+            editId={editId}
+            editDetalles={editDetalles}
+            setEditDetalles={setEditDetalles}
+          />
         </DialogContent>
       </Dialog>
     </div>

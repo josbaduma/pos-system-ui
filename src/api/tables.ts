@@ -1,3 +1,4 @@
+import { ProductDTO } from "@/constants/ProductDTO";
 import api from "./axiosInstance";
 
 export type Table = {
@@ -23,8 +24,8 @@ export const fetchSubAccountsActivePerTable = async (table: string | undefined):
   return response.data;
 };
 
-export const createNewSubAccount = async ({ nombre }: { nombre: string }) => {
-  const { data } = await api.post("/tables/sub-accounts", nombre);
+export const createNewSubAccount = async ({ body }: { body: { name: string, table_id: number } }) => {
+  const { data } = await api.post("/tables/sub-accounts", body);
   return data;
 }
 
@@ -46,4 +47,8 @@ export const updateQuantity = async ({
     `/tables/sub-accounts/${subaccountId}/detail/${detailId}`,
     { quantity }
   );
+}
+
+export const addProductToSubaccount = async ({ id, product }: { id: number, product: ProductDTO }) => {
+  return await api.post(`/tables/sub-accounts/${id}/products`, product);
 }
