@@ -199,7 +199,10 @@ const SubAccount = () => {
       </Card>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-3xl max-w-4xl h-[80vh] flex flex-col">
+        <DialogContent
+          className="sm:max-w-3xl max-w-4xl h-[80vh] flex flex-col"
+          aria-describedby="dialog-description"
+        >
           <DialogHeader>
             <DialogTitle>Editar Subcuenta</DialogTitle>
           </DialogHeader>
@@ -248,7 +251,12 @@ const SubAccount = () => {
                         }
                       />
                     </TableCell>
-                    <TableCell>{detail.subtotal}</TableCell>
+                    <TableCell>
+                      {new Intl.NumberFormat("es-CR", {
+                        style: "currency",
+                        currency: "CRC",
+                      }).format(detail.subtotal)}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

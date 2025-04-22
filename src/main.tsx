@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./app/Layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import SubAccount from "./pages/SubAccount";
+import Products from "./pages/Products";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -45,6 +46,16 @@ createRoot(document.getElementById("root")!).render(
                 <ProtectedRoute>
                   <Layout>
                     <SubAccount />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Products />
                   </Layout>
                 </ProtectedRoute>
               }

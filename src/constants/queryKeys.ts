@@ -3,4 +3,6 @@ export const query_keys = {
     LIST_SUBACCOUNTS: "list-subaccounts",
     CREATE_SUBACCOUNT: "create-subaccount",
     EDIT_SUBACCOUNT: "edit-subaccount",
+    LIST_PRODUCTS: "list-products",
+    LIST_CATEGORIES: "list-categories",
 } as const;
