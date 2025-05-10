@@ -12,6 +12,8 @@ import Layout from "./app/Layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import SubAccount from "./pages/SubAccount";
 import Products from "./pages/Products";
+import Categories from "./pages/Categories";
+import Customers from "./pages/Customers";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -56,6 +58,26 @@ createRoot(document.getElementById("root")!).render(
                 <ProtectedRoute>
                   <Layout>
                     <Products />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Categories />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/customers"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Customers />
                   </Layout>
                 </ProtectedRoute>
               }

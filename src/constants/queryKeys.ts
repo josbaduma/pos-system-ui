@@ -5,4 +5,5 @@ export const query_keys = {
     EDIT_SUBACCOUNT: "edit-subaccount",
     LIST_PRODUCTS: "list-products",
     LIST_CATEGORIES: "list-categories",
+    LIST_CUSTOMERS: "list-customers",
 } as const;
