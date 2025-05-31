@@ -7,7 +7,6 @@ export interface Customer {
 
 export const fetchCustomers = async (): Promise<Customer[]> => {
   const response = await api.get("/customers/");
-  console.log(response.data);
   return response.data.customers;
 };
 
@@ -18,11 +17,21 @@ export const deleteCustomer = async (id: number): Promise<string> => {
 
 export const createCustomer = async ({
   name,
+  email,
+  phone,
+  address,
 }: {
   name: string;
+  email: string;
+  phone: string;
+  address: string;
 }): Promise<Customer[]> => {
   const response = await api.post("/customers", {
     name,
+    email,
+    phone,
+    address,
+    password: "customer123",
   });
   return response.data;
 };

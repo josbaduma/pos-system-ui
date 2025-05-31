@@ -4,7 +4,7 @@ import {
   SidebarFooter,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { Home, Table, Vault, AlignLeft } from "lucide-react";
+import { Home, Table, Vault, AlignLeft, UserRoundSearch } from "lucide-react";
 import { NavMain } from "./nav-menu";
 import { NavUser } from "./nav-user";
 
@@ -29,6 +29,11 @@ const data = {
       title: "Categories",
       url: "/categories",
       icon: AlignLeft,
+    },
+    {
+      title: "Clientes",
+      url: "/customers",
+      icon: UserRoundSearch,
     },
     /*{
     title: "Settings",

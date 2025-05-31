@@ -34,10 +34,13 @@ import { query_keys } from "@/constants/queryKeys";
 const Customers = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
-  const [editCustomerData, setEditCustomeryData] = useState<any>(null);
+  const [editCustomerData, setEditCustomerData] = useState<any>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [newCustomer, setNewCustomery] = useState({
+  const [newCustomer, setNewCustomer] = useState({
     name: "",
+    email: "",
+    phone: "",
+    address: "",
   });
 
   const {
@@ -53,7 +56,7 @@ const Customers = () => {
     mutationFn: createCustomer,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [query_keys.LIST_CUSTOMERS] });
-      setNewCustomery({ name: "" });
+      setNewCustomer({ name: "", email: "", phone: "", address: "" });
     },
   });
 
@@ -77,12 +80,12 @@ const Customers = () => {
   };
 
   const handleEdit = (product: any) => {
-    setEditCustomeryData(product);
+    setEditCustomerData(product);
     setIsDialogOpen(true);
   };
 
   const handleDelete = (productId: number) => {
-    if (confirm("¿Estás seguro de que deseas eliminar este categoria?")) {
+    if (confirm("¿Estás seguro de que deseas eliminar este cliente?")) {
       deleteMutation.mutate(productId);
     }
   };
@@ -99,6 +102,9 @@ const Customers = () => {
     if (newCustomer.name) {
       createMutation.mutate({
         name: newCustomer.name,
+        email: newCustomer.email,
+        address: newCustomer.address,
+        phone: newCustomer.phone,
       });
     }
   };
@@ -107,14 +113,14 @@ const Customers = () => {
     category.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (isLoading) return <p>Cargando categorias...</p>;
-  if (isError) return <p>Error al cargar categorias ❌</p>;
+  if (isLoading) return <p>Cargando clientes...</p>;
+  if (isError) return <p>Error al cargar clientes ❌</p>;
 
   return (
     <div className="max-w-4xl mx-auto mt-6 w-full">
-      <h1 className="text-2xl font-bold mb-4">Gestión de Customerias</h1>
+      <h1 className="text-2xl font-bold mb-4">Gestión de Clientes</h1>
       <div className="p-4 border rounded-md mb-6">
-        <h2 className="text-lg font-semibold mb-4">Crear Nuevo Customeria</h2>
+        <h2 className="text-lg font-semibold mb-4">Crear Nuevo Cliente</h2>
         <form
           onSubmit={handleCreateSubmit}
           className="flex items-center space-x-4 mb-6"
@@ -123,20 +129,47 @@ const Customers = () => {
             type="text"
             value={newCustomer.name}
             onChange={(e) =>
-              setNewCustomery({ ...newCustomer, name: e.target.value })
+              setNewCustomer({ ...newCustomer, name: e.target.value })
             }
-            placeholder="Nombre del categoria"
+            placeholder="Nombre del cliente"
+            required
+          />
+          <Input
+            type="email"
+            value={newCustomer.email}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, email: e.target.value })
+            }
+            placeholder="Correo"
+            required
+          />
+          <Input
+            type="text"
+            value={newCustomer.phone}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, phone: e.target.value })
+            }
+            placeholder="Teléfono"
+            required
+          />
+          <Input
+            type="text"
+            value={newCustomer.address}
+            onChange={(e) =>
+              setNewCustomer({ ...newCustomer, address: e.target.value })
+            }
+            placeholder="Dirección"
             required
           />
 
-          <Button type="submit">Crear Customeria</Button>
+          <Button type="submit">Crear Cliente</Button>
         </form>
       </div>
 
       <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-4">Buscar Customerias</h2>
+        <h2 className="text-lg font-semibold mb-4">Buscar Clientes</h2>
         <Input
-          placeholder="Buscar categoria..."
+          placeholder="Buscar cliente..."
           value={search}
           onChange={handleSearch}
           className="mb-4"
@@ -186,19 +219,52 @@ const Customers = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar Customeria</DialogTitle>
+            <DialogTitle>Editar Cliente</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleEditSubmit} className="space-y-4">
             <Input
               type="text"
               value={editCustomerData?.name || ""}
               onChange={(e) =>
-                setEditCustomeryData((prev: any) => ({
+                setEditCustomerData((prev: any) => ({
                   ...prev,
                   name: e.target.value,
                 }))
               }
-              placeholder="Nombre del categoria"
+              placeholder="Nombre del cliente"
+              required
+            />
+            <Input
+              type="email"
+              value={editCustomerData?.email || ""}
+              onChange={(e) =>
+                setEditCustomerData(
+                  (prev: any) => prev && { ...prev, email: e.target.value }
+                )
+              }
+              placeholder="Correo"
+              required
+            />
+            <Input
+              type="text"
+              value={editCustomerData?.phone || ""}
+              onChange={(e) =>
+                setEditCustomerData(
+                  (prev: any) => prev && { ...prev, phone: e.target.value }
+                )
+              }
+              placeholder="Teléfono"
+              required
+            />
+            <Input
+              type="text"
+              value={editCustomerData?.address || ""}
+              onChange={(e) =>
+                setEditCustomerData(
+                  (prev: any) => prev && { ...prev, address: e.target.value }
+                )
+              }
+              placeholder="Teléfono"
               required
             />
 
