@@ -13,6 +13,5 @@ export type LoginResponse = {
 
 export const login = async (data: LoginData): Promise<LoginResponse> => {
   const response = await api.post("/auth/login", data);
-  console.log(response.data);
   return response.data;
 };

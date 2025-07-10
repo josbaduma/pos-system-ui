@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createNewSubAccount,
   editSubAccount,
   fetchSubAccountsActivePerTable,
   updateQuantity,
+  removeProductFromSubaccount,
 } from "@/api/tables";
 import { Link, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/dialog";
 import { query_keys } from "../constants/queryKeys";
 import EditSubAccount from "@/components/EditSubAccount";
+import { Trash2 } from "lucide-react";
 
 const SubAccount = () => {
   const { table } = useParams();
@@ -83,6 +85,21 @@ const SubAccount = () => {
       });
     },
   });
+  const removeProductMutation = useMutation({
+    mutationFn: removeProductFromSubaccount,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [query_keys.LIST_SUBACCOUNTS, table],
+      });
+    },
+  });
+
+  const handleRemoveProduct = (detailId: number) => {
+    if (editId !== null) {
+      removeProductMutation.mutate({ subaccountId: editId, detailId });
+      setEditDetalles((prev) => prev.filter((d) => d.id !== detailId));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -256,6 +273,16 @@ const SubAccount = () => {
                         style: "currency",
                         currency: "CRC",
                       }).format(detail.subtotal)}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleRemoveProduct(detail.id)}
+                        title="Eliminar producto"
+                      >
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

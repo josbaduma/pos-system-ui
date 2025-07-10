@@ -26,7 +26,6 @@ export default function LoginPage() {
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data: LoginResponse) => {
-      console.log(data);
       setToken(data.accessToken);
       navigate("/dashboard");
     },

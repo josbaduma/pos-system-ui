@@ -56,7 +56,10 @@ const EditSubAccount = ({
   const addProductoMutation = useMutation({
     mutationFn: addProductToSubaccount,
     onSuccess: (newProduct) => {
-      setEditDetalles((prev: ProductDTO[]) => [...prev, newProduct]);
+      setEditDetalles((prev: ProductDTO[]) => [
+        ...prev,
+        newProduct.data.product,
+      ]);
       queryClient.invalidateQueries({ queryKey: ["list-products"] });
     },
   });
