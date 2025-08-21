@@ -76,7 +76,7 @@ export const billSubAccount = async ({
   discount: number;
   taxes: number;
 }) => {
-  const response = await api.post(`/sub-accounts/${id}/bill`, {
+  const response = await api.post(`/tables/sub-accounts/${id}/bill`, {
     discount,
     taxes,
   });

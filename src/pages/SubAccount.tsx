@@ -101,6 +101,10 @@ const SubAccount = () => {
     mutationFn: billSubAccount,
     onSuccess: (data) => {
       setBillMessage("Subcuenta facturada correctamente ✅");
+      setTimeout(() => {
+        setBillMessage("");
+        setIsDialogOpen(false);
+      }, 1000);
       queryClient.invalidateQueries({
         queryKey: [query_keys.LIST_SUBACCOUNTS, table],
       });
