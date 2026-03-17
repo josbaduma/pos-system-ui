@@ -9,6 +9,7 @@ import { useAuthStore } from "@/store/authStore";
 import { login, LoginResponse } from "@/api/auth";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/image-logo.png";
+import { Helmet } from "react-helmet-async";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -33,6 +34,9 @@ export default function LoginPage() {
 
   return (
     <div className="container w-[100vw] max-w-full">
+      <Helmet>
+        <title>POS | Login</title>
+      </Helmet>
       <div className="flex justify-center items-center min-h-screen bg-gray-100 w-full">
         <Card className="w-full max-w-md p-6 space-y-6 shadow-lg rounded-2xl">
           <CardHeader>

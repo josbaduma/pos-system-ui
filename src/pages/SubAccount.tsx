@@ -12,6 +12,7 @@ import { Link, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
 import {
   Table,
   TableBody,
@@ -136,8 +137,8 @@ const SubAccount = () => {
   const handleQuantityChange = (detailId: number, quantity: number) => {
     setEditDetalles((prev) =>
       prev.map((details) =>
-        details.id === detailId ? { ...details, quantity } : details
-      )
+        details.id === detailId ? { ...details, quantity } : details,
+      ),
     );
   };
 
@@ -157,8 +158,8 @@ const SubAccount = () => {
                   quantity: quantity,
                   subtotal: detail.product.price * quantity,
                 }
-              : detail
-          )
+              : detail,
+          ),
         );
         queryClient.invalidateQueries({
           queryKey: [query_keys.LIST_SUBACCOUNTS, table],
@@ -172,7 +173,7 @@ const SubAccount = () => {
   const handleEditSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editId !== null) {
-      editMutation.mutate({ id: editId, nombre: editNombre });
+      editMutation.mutate({ id: editId, name: editNombre });
     }
   };
 
@@ -191,6 +192,9 @@ const SubAccount = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-6">
+      <Helmet>
+        <title>POS | Subcuenta - Mesa {table}</title>
+      </Helmet>
       <Link to="/tables">
         <Button variant="outline">← Volver a Mesas</Button>
       </Link>
@@ -265,7 +269,7 @@ const SubAccount = () => {
               required
               className="w-full"
             />
-            <Button type="submit">Guardar Cambios</Button>
+            <Button type="submit">Guardar Nombre</Button>
           </form>
           <div className="flex flex-1 gap-6">
             {/* Columna 1: Productos y edición */}
@@ -297,7 +301,7 @@ const SubAccount = () => {
                             onChange={(e) =>
                               handleQuantityChange(
                                 detail.id,
-                                Number(e.target.value)
+                                Number(e.target.value),
                               )
                             }
                             onBlur={() =>
@@ -364,6 +368,8 @@ const SubAccount = () => {
                       placeholder="Descuento"
                       value={discount}
                       min={0}
+                      max={100}
+                      step={0.01}
                       onChange={(e) => setDiscount(Number(e.target.value))}
                       className="w-full"
                     />
@@ -373,7 +379,7 @@ const SubAccount = () => {
                       htmlFor="impuestos"
                       className="text-sm font-medium mb-1"
                     >
-                      Aplicar Impuesto (10%)
+                      Impuestode por Servicio (10%)
                     </label>
                     <input
                       id="impuestos"

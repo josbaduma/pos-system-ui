@@ -14,77 +14,80 @@ import SubAccount from "./pages/SubAccount";
 import Products from "./pages/Products";
 import Categories from "./pages/Categories";
 import Customers from "./pages/Customers";
+import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Dashboard />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tables"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <TablesPage />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/subaccount/:table"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <SubAccount />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/products"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Products />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/categories"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Categories />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/customers"
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Customers />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+        <HelmetProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <Dashboard />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tables"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <TablesPage />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/subaccount/:table"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <SubAccount />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/products"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <Products />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/categories"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <Categories />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/customers"
+                element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <Customers />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </HelmetProvider>
       </QueryClientProvider>
     </ThemeProvider>
-  </StrictMode>
+  </StrictMode>,
 );

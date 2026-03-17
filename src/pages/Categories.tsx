@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Helmet } from "react-helmet-async";
 import {
   Table,
   TableBody,
@@ -111,7 +112,7 @@ const Categories = () => {
   };
 
   const filteredCategories = productCategories?.filter((category: any) =>
-    category.name.toLowerCase().includes(search.toLowerCase())
+    category.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   if (isLoading) return <p>Cargando categorias...</p>;
@@ -119,6 +120,9 @@ const Categories = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-6 w-full">
+      <Helmet>
+        <title>POS | Categorías</title>
+      </Helmet>
       <h1 className="text-2xl font-bold mb-4">Gestión de Categorias</h1>
       <div className="p-4 border rounded-md mb-6">
         <h2 className="text-lg font-semibold mb-4">Crear Nuevo Categoria</h2>

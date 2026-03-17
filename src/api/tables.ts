@@ -29,8 +29,8 @@ export const createNewSubAccount = async ({ body }: { body: { name: string, tabl
   return data;
 }
 
-export const editSubAccount = async ({ id, nombre }: { id: number, nombre: string }) => {
-  const { data } = await api.put(`/tables/sub-accounts/${id}`, { nombre });
+export const editSubAccount = async ({ id, name }: { id: number, name: string }) => {
+  const { data } = await api.put(`/tables/sub-accounts/${id}`, { name });
   return data;
 }
 

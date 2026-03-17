@@ -6,4 +6,5 @@ export const query_keys = {
     LIST_PRODUCTS: "list-products",
     LIST_CATEGORIES: "list-categories",
     LIST_CUSTOMERS: "list-customers",
+    LIST_SALES: "list-sales",
 } as const;

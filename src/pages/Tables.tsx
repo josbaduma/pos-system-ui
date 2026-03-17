@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTables, Table } from "../api/tables";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const TablesPage: React.FC = () => {
   const {
@@ -28,6 +29,9 @@ const TablesPage: React.FC = () => {
 
   return (
     <div className="p-8 min-h-screen bg-gray-100 max-w-full min-w-full w-100 dark:bg-gray-700">
+      <Helmet>
+        <title>POS | Mesas</title>
+      </Helmet>
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">
         Mesas del Restaurante
       </h1>
@@ -37,7 +41,7 @@ const TablesPage: React.FC = () => {
             <div
               key={table.id}
               className={`p-6 rounded-lg shadow-md text-white ${getTableColor(
-                table.status
+                table.status,
               )}`}
             >
               <h2 className="text-xl font-bold mb-2">{table.name}</h2>

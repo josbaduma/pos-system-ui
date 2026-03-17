@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Helmet } from "react-helmet-async";
 import {
   Table,
   TableBody,
@@ -110,7 +111,7 @@ const Customers = () => {
   };
 
   const filteredCustomeries = customers?.filter((category: any) =>
-    category.name.toLowerCase().includes(search.toLowerCase())
+    category.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   if (isLoading) return <p>Cargando clientes...</p>;
@@ -118,6 +119,9 @@ const Customers = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-6 w-full">
+      <Helmet>
+        <title>POS | Clientes</title>
+      </Helmet>
       <h1 className="text-2xl font-bold mb-4">Gestión de Clientes</h1>
       <div className="p-4 border rounded-md mb-6">
         <h2 className="text-lg font-semibold mb-4">Crear Nuevo Cliente</h2>
@@ -239,7 +243,7 @@ const Customers = () => {
               value={editCustomerData?.email || ""}
               onChange={(e) =>
                 setEditCustomerData(
-                  (prev: any) => prev && { ...prev, email: e.target.value }
+                  (prev: any) => prev && { ...prev, email: e.target.value },
                 )
               }
               placeholder="Correo"
@@ -250,7 +254,7 @@ const Customers = () => {
               value={editCustomerData?.phone || ""}
               onChange={(e) =>
                 setEditCustomerData(
-                  (prev: any) => prev && { ...prev, phone: e.target.value }
+                  (prev: any) => prev && { ...prev, phone: e.target.value },
                 )
               }
               placeholder="Teléfono"
@@ -261,7 +265,7 @@ const Customers = () => {
               value={editCustomerData?.address || ""}
               onChange={(e) =>
                 setEditCustomerData(
-                  (prev: any) => prev && { ...prev, address: e.target.value }
+                  (prev: any) => prev && { ...prev, address: e.target.value },
                 )
               }
               placeholder="Teléfono"
