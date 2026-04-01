@@ -55,7 +55,9 @@ jobs:
 
                 updatedBody = format(body, templateTitle, id, taskCode, typeOfChange);
               } catch (e) {
-
+                console.error('Failed to parse branch name for PR title:', e);
+                title = `Invalid branch name 👀 (type/task-id/description)`;
+                updatedBody = body;
               }
             }
 
