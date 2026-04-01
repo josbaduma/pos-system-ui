@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   pull_request:
     types:
-        - review_requested
+      - review_requested
 
 jobs:
   label:
