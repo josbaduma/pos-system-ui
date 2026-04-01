@@ -44,7 +44,7 @@ jobs:
 
             if (["main", "master"].includes(baseBranch)) {
               title = `[Release] vX.X.X 🚀 - ${today.toLocaleDateString('en-GB')}`;
-              updatedBody = '';
+              updatedBody = body;
             } else {
               try {
               const [type, id, description] = branchName.split('/');

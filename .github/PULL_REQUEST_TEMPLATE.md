@@ -11,7 +11,7 @@ Please include a summary of the change and which issue is fixed. Please also inc
 Example:
 -->
 
-For more background, see ticket **{1}[in-progress].**
+For more background, see ticket **{1} [in-progress].**
 
 <!--
 ONLY ADD SECTION IF A NEW PACKAGE IS ADDED
@@ -46,7 +46,7 @@ Please describe any known issues, bugs, or unintended consequences with this cha
 
 Ex:
 This pr is blocked by #1234.
-Im awaiting backend changes to be merged before I can complete this, etc.
+I'm awaiting backend changes to be merged before I can complete this, etc.
 This
 -->
 
@@ -59,5 +59,5 @@ This
 - [ ] My changes generate no new warnings
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] New and existing unit tests pass locally with my changes
-- [ ] If my task include an endpoint, I add the endpoint to Hopscotch/Postman Project
+- [ ] If my task includes an endpoint, I add the endpoint to Hopscotch/Postman Project
 - [ ] Any dependent changes have been merged and published in downstream modules
